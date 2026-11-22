@@ -1,0 +1,37 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css'; 
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import ApplicationsPage from './pages/ApplicationsPage'; 
+import PrivateRoutes from './components/PrivateRoutes';
+import { AuthProvider } from './context/AuthContext'; 
+import Home from './pages/Home';
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import Profile from './pages/Profile';
+import ResumeAnalyzer from './pages/ResumeAnalyser';
+import GoogleAuthCallback from './components/GoogleAuthCallback';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider> 
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/applications" element={<ApplicationsPage />} /> 
+            <Route path="/profile" element={<Profile />} />  
+            <Route path="/ai-resume-analyzer" element={<ResumeAnalyzer/>}/>
+          </Route>
+          <Route path="*" element={<div>404 Not Found</div>} />
+        </Routes>
+        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;
